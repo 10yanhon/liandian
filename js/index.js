@@ -654,7 +654,7 @@ function normalizeSource(value) {
 const QUALITY_OPTIONS = [
     { value: "128", label: "标准音质", description: "128 kbps" },
     { value: "192", label: "高品音质", description: "192 kbps" },
-    { value: "320", label: "极高音质", description: "320 kbps" },
+    { value: "320", label: "超高音质", description: "320 kbps" },
     { value: "999", label: "无损音质", description: "FLAC" }
 ];
 

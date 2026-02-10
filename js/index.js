@@ -1806,8 +1806,8 @@ function showAlbumCoverPlaceholder() {
     dom.albumCover.classList.remove("loading");
     state.currentArtworkUrl = toAbsoluteUrl('/favicon.png');
     queueDefaultPalette();
-    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
-        window.__SOLARA_UPDATE_MEDIA_METADATA();
+    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
+        window.__潘方音乐_UPDATE_MEDIA_METADATA();
     }
 }
 
@@ -1816,8 +1816,8 @@ function setAlbumCoverImage(url) {
     state.currentArtworkUrl = safeUrl;
     dom.albumCover.innerHTML = `<img src="${safeUrl}" alt="专辑封面">`;
     dom.albumCover.classList.remove("loading");
-    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
-        window.__SOLARA_UPDATE_MEDIA_METADATA();
+    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
+        window.__潘方音乐_UPDATE_MEDIA_METADATA();
     }
 }
 

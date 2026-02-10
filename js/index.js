@@ -79,14 +79,14 @@ const dom = {
     currentFavoriteToggle: document.getElementById("currentFavoriteToggle"),
 };
 
-window.SolaraDom = dom;
+window.潘方音乐Dom = dom;
 
-const isMobileView = Boolean(window.__SOLARA_IS_MOBILE);
+const isMobileView = Boolean(window.__潘方音乐_IS_MOBILE);
 
-const mobileBridge = window.SolaraMobileBridge || {};
+const mobileBridge = window.潘方音乐MobileBridge || {};
 mobileBridge.handlers = mobileBridge.handlers || {};
 mobileBridge.queue = Array.isArray(mobileBridge.queue) ? mobileBridge.queue : [];
-window.SolaraMobileBridge = mobileBridge;
+window.潘方音乐MobileBridge = mobileBridge;
 
 function invokeMobileHook(name, ...args) {
     if (!isMobileView) {
@@ -1150,7 +1150,7 @@ bootstrapPersistentStorage();
 
     let handlersBound = false;
     let lastPositionUpdateTime = 0;
-    const MEDIA_SESSION_ENDED_FLAG = '__solaraMediaSessionHandledEnded';
+    const MEDIA_SESSION_ENDED_FLAG = '__潘方音乐MediaSessionHandledEnded';
 
     const preferLockScreenTrackControls = (() => {
         if (typeof navigator === 'undefined') {
@@ -1166,9 +1166,9 @@ bootstrapPersistentStorage();
 
     function triggerMediaSessionMetadataRefresh() {
         let refreshed = false;
-        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
             try {
-                window.__SOLARA_UPDATE_MEDIA_METADATA();
+                window.__潘方音乐_UPDATE_MEDIA_METADATA();
                 refreshed = true;
             } catch (error) {
                 console.warn('刷新媒体信息失败:', error);
@@ -1402,10 +1402,10 @@ bootstrapPersistentStorage();
     });
 
     // 当你在应用内切歌（更新 state.currentSong / 封面 / 标题）时，也调用一次：
-    // window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    // window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     // 这样在你现有的切歌逻辑里，设置完新的 audio.src 后手动调用它可立即更新锁屏封面/文案。
-    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA !== 'function') {
-        window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA !== 'function') {
+        window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     }
 
     triggerMediaSessionMetadataRefresh();

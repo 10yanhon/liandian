@@ -3500,8 +3500,8 @@ function updateCurrentSongInfo(song, options = {}) {
                 const absoluteImageUrl = toAbsoluteUrl(imageUrl);
                 if (state.currentSong === song) {
                     state.currentArtworkUrl = absoluteImageUrl;
-                    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
-                        window.__SOLARA_UPDATE_MEDIA_METADATA();
+                    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
+                        window.__潘方音乐_UPDATE_MEDIA_METADATA();
                     }
                 }
                 img.crossOrigin = "anonymous";
@@ -4359,7 +4359,7 @@ function exportPlaylist() {
     try {
         const payload = {
             meta: {
-                app: "Solara",
+                app: "潘方音乐",
                 version: PLAYLIST_EXPORT_VERSION,
                 exportedAt: new Date().toISOString(),
                 itemCount: state.playlistSongs.length
@@ -4373,7 +4373,7 @@ function exportPlaylist() {
         const formattedTimestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
         const anchor = document.createElement("a");
         anchor.href = url;
-        anchor.download = `solara-playlist-${formattedTimestamp}.json`;
+        anchor.download = `潘方音乐-playlist-${formattedTimestamp}.json`;
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);

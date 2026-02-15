@@ -79,14 +79,14 @@ const dom = {
     currentFavoriteToggle: document.getElementById("currentFavoriteToggle"),
 };
 
-window.潘方音乐Dom = dom;
+window.SolaraDom = dom;
 
-const isMobileView = Boolean(window.__潘方音乐_IS_MOBILE);
+const isMobileView = Boolean(window.__SOLARA_IS_MOBILE);
 
-const mobileBridge = window.潘方音乐MobileBridge || {};
+const mobileBridge = window.SolaraMobileBridge || {};
 mobileBridge.handlers = mobileBridge.handlers || {};
 mobileBridge.queue = Array.isArray(mobileBridge.queue) ? mobileBridge.queue : [];
-window.潘方音乐MobileBridge = mobileBridge;
+window.SolaraMobileBridge = mobileBridge;
 
 function invokeMobileHook(name, ...args) {
     if (!isMobileView) {
@@ -642,7 +642,7 @@ function buildAudioProxyUrl(url) {
 
 const SOURCE_OPTIONS = [
     { value: "netease", label: "YY音乐" },
-    { value: "kuwo", label: "WO音乐" },
+    { value: "kuwo", label: "WW音乐" },
     { value: "joox", label: "JOOX音乐" }
 ];
 
@@ -1150,7 +1150,7 @@ bootstrapPersistentStorage();
 
     let handlersBound = false;
     let lastPositionUpdateTime = 0;
-    const MEDIA_SESSION_ENDED_FLAG = '__潘方音乐MediaSessionHandledEnded';
+    const MEDIA_SESSION_ENDED_FLAG = '__solaraMediaSessionHandledEnded';
 
     const preferLockScreenTrackControls = (() => {
         if (typeof navigator === 'undefined') {
@@ -1166,9 +1166,9 @@ bootstrapPersistentStorage();
 
     function triggerMediaSessionMetadataRefresh() {
         let refreshed = false;
-        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
+        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
             try {
-                window.__潘方音乐_UPDATE_MEDIA_METADATA();
+                window.__SOLARA_UPDATE_MEDIA_METADATA();
                 refreshed = true;
             } catch (error) {
                 console.warn('刷新媒体信息失败:', error);
@@ -1227,7 +1227,7 @@ bootstrapPersistentStorage();
     function updateMediaMetadata() {
         // 依赖现有全局 state.currentSong；已在项目中使用 localStorage 保存/恢复。:contentReference[oaicite:7]{index=7}
         const song = state.currentSong || {};
-        const title = song.name || dom.currentSongTitle?.textContent || '潘方音乐';
+        const title = song.name || dom.currentSongTitle?.textContent || 'Solara';
         const artist = song.artist || dom.currentSongArtist?.textContent || '';
         const artworkUrl = state.currentArtworkUrl || '';
 
@@ -1402,10 +1402,10 @@ bootstrapPersistentStorage();
     });
 
     // 当你在应用内切歌（更新 state.currentSong / 封面 / 标题）时，也调用一次：
-    // window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    // window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     // 这样在你现有的切歌逻辑里，设置完新的 audio.src 后手动调用它可立即更新锁屏封面/文案。
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA !== 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA !== 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     }
 
     triggerMediaSessionMetadataRefresh();
@@ -1806,8 +1806,8 @@ function showAlbumCoverPlaceholder() {
     dom.albumCover.classList.remove("loading");
     state.currentArtworkUrl = toAbsoluteUrl('/favicon.png');
     queueDefaultPalette();
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA();
     }
 }
 
@@ -1816,8 +1816,8 @@ function setAlbumCoverImage(url) {
     state.currentArtworkUrl = safeUrl;
     dom.albumCover.innerHTML = `<img src="${safeUrl}" alt="专辑封面">`;
     dom.albumCover.classList.remove("loading");
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA();
     }
 }
 
@@ -2604,7 +2604,7 @@ function getQualityMenuAnchor() {
     qualityMenuAnchor = fallback;
     return fallback;
 }
-7
+
 function updateQualityLabel() {
     const option = QUALITY_OPTIONS.find(item => item.value === state.playbackQuality) || QUALITY_OPTIONS[0];
     if (!option) return;
@@ -3500,8 +3500,8 @@ function updateCurrentSongInfo(song, options = {}) {
                 const absoluteImageUrl = toAbsoluteUrl(imageUrl);
                 if (state.currentSong === song) {
                     state.currentArtworkUrl = absoluteImageUrl;
-                    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-                        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+                    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+                        window.__SOLARA_UPDATE_MEDIA_METADATA();
                     }
                 }
                 img.crossOrigin = "anonymous";
@@ -4359,7 +4359,7 @@ function exportPlaylist() {
     try {
         const payload = {
             meta: {
-                app: "潘方音乐",
+                app: "Solara",
                 version: PLAYLIST_EXPORT_VERSION,
                 exportedAt: new Date().toISOString(),
                 itemCount: state.playlistSongs.length
@@ -4373,7 +4373,7 @@ function exportPlaylist() {
         const formattedTimestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
         const anchor = document.createElement("a");
         anchor.href = url;
-        anchor.download = `潘方音乐-playlist-${formattedTimestamp}.json`;
+        anchor.download = `solara-playlist-${formattedTimestamp}.json`;
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
@@ -4963,7 +4963,7 @@ function exportFavorites() {
     try {
         const payload = {
             meta: {
-                app: "潘方音乐",
+                app: "Solara",
                 version: FAVORITE_EXPORT_VERSION,
                 exportedAt: new Date().toISOString(),
                 itemCount: favorites.length,
@@ -4978,7 +4978,7 @@ function exportFavorites() {
         const formattedTimestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
         const anchor = document.createElement("a");
         anchor.href = url;
-        anchor.download = `潘方音乐-favorites-${formattedTimestamp}.json`;
+        anchor.download = `solara-favorites-${formattedTimestamp}.json`;
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
@@ -5325,8 +5325,8 @@ async function playSong(song, options = {}) {
 
         debugLog(`开始播放: ${song.name} @${quality}`);
 
-        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-            window.__潘方音乐_UPDATE_MEDIA_METADATA();
+        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+            window.__SOLARA_UPDATE_MEDIA_METADATA();
         }
     } catch (error) {
         console.error('播放歌曲失败:', error);
@@ -5384,8 +5384,8 @@ function scheduleDeferredSongAssets(song, playPromise) {
 
 // 修复：自动播放下一首 - 支持播放模式
 function autoPlayNext() {
-    if (dom.audioPlayer && dom.audioPlayer.__潘方音乐MediaSessionHandledEnded === 'skip') {
-        dom.audioPlayer.__潘方音乐MediaSessionHandledEnded = false;
+    if (dom.audioPlayer && dom.audioPlayer.__solaraMediaSessionHandledEnded === 'skip') {
+        dom.audioPlayer.__solaraMediaSessionHandledEnded = false;
         return;
     }
     const mode = getActivePlayMode();

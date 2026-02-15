@@ -5325,8 +5325,8 @@ async function playSong(song, options = {}) {
 
         debugLog(`开始播放: ${song.name} @${quality}`);
 
-        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-            window.__潘方音乐_UPDATE_MEDIA_METADATA();
+        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+            window.__SOLARA_UPDATE_MEDIA_METADATA();
         }
     } catch (error) {
         console.error('播放歌曲失败:', error);
@@ -5384,8 +5384,8 @@ function scheduleDeferredSongAssets(song, playPromise) {
 
 // 修复：自动播放下一首 - 支持播放模式
 function autoPlayNext() {
-    if (dom.audioPlayer && dom.audioPlayer.__solaraMediaSessionHandledEnded === 'skip') {
-        dom.audioPlayer.__solaraMediaSessionHandledEnded = false;
+    if (dom.audioPlayer && dom.audioPlayer.__潘方音乐MediaSessionHandledEnded === 'skip') {
+        dom.audioPlayer.__潘方音乐MediaSessionHandledEnded = false;
         return;
     }
     const mode = getActivePlayMode();

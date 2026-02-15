@@ -79,14 +79,14 @@ const dom = {
     currentFavoriteToggle: document.getElementById("currentFavoriteToggle"),
 };
 
-window.SolaraDom = dom;
+window.潘方音乐Dom = dom;
 
-const isMobileView = Boolean(window.__SOLARA_IS_MOBILE);
+const isMobileView = Boolean(window.__潘方音乐_IS_MOBILE);
 
-const mobileBridge = window.SolaraMobileBridge || {};
+const mobileBridge = window.潘方音乐MobileBridge || {};
 mobileBridge.handlers = mobileBridge.handlers || {};
 mobileBridge.queue = Array.isArray(mobileBridge.queue) ? mobileBridge.queue : [];
-window.SolaraMobileBridge = mobileBridge;
+window.潘方音乐MobileBridge = mobileBridge;
 
 function invokeMobileHook(name, ...args) {
     if (!isMobileView) {

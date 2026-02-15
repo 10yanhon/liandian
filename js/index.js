@@ -1166,9 +1166,9 @@ bootstrapPersistentStorage();
 
     function triggerMediaSessionMetadataRefresh() {
         let refreshed = false;
-        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
             try {
-                window.__SOLARA_UPDATE_MEDIA_METADATA();
+                window.__潘方音乐_UPDATE_MEDIA_METADATA();
                 refreshed = true;
             } catch (error) {
                 console.warn('刷新媒体信息失败:', error);

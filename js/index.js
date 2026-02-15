@@ -81,7 +81,7 @@ const dom = {
 
 window.SolaraDom = dom;
 
-const isMobileView = Boolean(window.__潘方音乐_IS_MOBILE);
+const isMobileView = Boolean(window.__SOLARA_IS_MOBILE);
 
 const mobileBridge = window.SolaraMobileBridge || {};
 mobileBridge.handlers = mobileBridge.handlers || {};
@@ -641,8 +641,8 @@ function buildAudioProxyUrl(url) {
 }
 
 const SOURCE_OPTIONS = [
-    { value: "netease", label: "YY音乐" },
-    { value: "kuwo", label: "WW音乐" },
+    { value: "netease", label: "网易云音乐" },
+    { value: "kuwo", label: "酷我音乐" },
     { value: "joox", label: "JOOX音乐" }
 ];
 
@@ -1166,9 +1166,9 @@ bootstrapPersistentStorage();
 
     function triggerMediaSessionMetadataRefresh() {
         let refreshed = false;
-        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
+        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
             try {
-                window.__潘方音乐_UPDATE_MEDIA_METADATA();
+                window.__SOLARA_UPDATE_MEDIA_METADATA();
                 refreshed = true;
             } catch (error) {
                 console.warn('刷新媒体信息失败:', error);
@@ -1402,10 +1402,10 @@ bootstrapPersistentStorage();
     });
 
     // 当你在应用内切歌（更新 state.currentSong / 封面 / 标题）时，也调用一次：
-    // window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    // window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     // 这样在你现有的切歌逻辑里，设置完新的 audio.src 后手动调用它可立即更新锁屏封面/文案。
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA !== 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA = updateMediaMetadata;
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA !== 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA = updateMediaMetadata;
     }
 
     triggerMediaSessionMetadataRefresh();
@@ -1806,8 +1806,8 @@ function showAlbumCoverPlaceholder() {
     dom.albumCover.classList.remove("loading");
     state.currentArtworkUrl = toAbsoluteUrl('/favicon.png');
     queueDefaultPalette();
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA();
     }
 }
 
@@ -1816,8 +1816,8 @@ function setAlbumCoverImage(url) {
     state.currentArtworkUrl = safeUrl;
     dom.albumCover.innerHTML = `<img src="${safeUrl}" alt="专辑封面">`;
     dom.albumCover.classList.remove("loading");
-    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+        window.__SOLARA_UPDATE_MEDIA_METADATA();
     }
 }
 
@@ -3500,8 +3500,8 @@ function updateCurrentSongInfo(song, options = {}) {
                 const absoluteImageUrl = toAbsoluteUrl(imageUrl);
                 if (state.currentSong === song) {
                     state.currentArtworkUrl = absoluteImageUrl;
-                    if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-                        window.__潘方音乐_UPDATE_MEDIA_METADATA();
+                    if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+                        window.__SOLARA_UPDATE_MEDIA_METADATA();
                     }
                 }
                 img.crossOrigin = "anonymous";
@@ -5325,8 +5325,8 @@ async function playSong(song, options = {}) {
 
         debugLog(`开始播放: ${song.name} @${quality}`);
 
-        if (typeof window.__潘方音乐_UPDATE_MEDIA_METADATA === 'function') {
-            window.__潘方音乐_UPDATE_MEDIA_METADATA();
+        if (typeof window.__SOLARA_UPDATE_MEDIA_METADATA === 'function') {
+            window.__SOLARA_UPDATE_MEDIA_METADATA();
         }
     } catch (error) {
         console.error('播放歌曲失败:', error);

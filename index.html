@@ -76,57 +76,65 @@
 
     <!-- 走马灯最终修复样式（无底色 + 强覆盖 desktop.css + 位置锁定） -->
     <style>
-        .marquee-container {
-            width: 100% !important;
-            overflow: hidden !important;
-            padding: 10px 0 !important;
-            margin: 0 auto !important;
-            position: relative !important;
-            z-index: 9999 !important;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            pointer-events: none !important;
-            order: -1 !important;               /* 强制排在搜索栏上方 */
-        }
+    .marquee-container {
+        width: 100% !important;
+        overflow: hidden !important;
+        padding: 10px 0 !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        z-index: 9999 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+        order: -1 !important;               /* 强制排在搜索栏上方 */
+    }
 
-        .marquee {
-            display: inline-block !important;
-            white-space: nowrap !important;
-            font-size: 18px !important;
-            color: #ff99cc !important;
-            font-weight: 500 !important;
-            padding-left: 100% !important;
-            animation: marquee 40s linear infinite !important;
-            text-shadow: 0 0 8px rgba(255, 153, 204, 0.9) !important;
-            will-change: transform !important;
-            pointer-events: none !important;
-        }
+    .marquee {
+        display: flex !important;           /* 改为 flex 使多条内容排成一行 */
+        width: max-content !important;     /* 宽度由内容决定 */
+        white-space: nowrap !important;
+        font-size: 18px !important;
+        color: #ff99cc !important;
+        font-weight: 500 !important;
+        /* 删除了 padding-left: 100%, 改用无缝动画 */
+        animation: marquee-seamless 40s linear infinite !important; 
+        text-shadow: 0 0 8px rgba(255, 153, 204, 0.9) !important;
+        will-change: transform !important;
+        pointer-events: auto !important;     /* 改为 auto 否则 hover 暂停无效 */
+    }
 
-        .marquee:hover {
-            animation-play-state: paused !important;
-        }
+    .marquee-content {
+        display: flex !important;
+        flex-shrink: 0 !important;
+    }
 
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-100%); }
-        }
+    .marquee:hover {
+        animation-play-state: paused !important;
+    }
 
-        /* 桌面端核心修复：覆盖 desktop.css 的布局挤压 */
-        .desktop-view .marquee-container {
-            padding: 12px 0 !important;
-            z-index: 9999 !important;
-            position: relative !important;
-        }
-        .desktop-view .marquee {
-            font-size: 19px !important;
-        }
+    /* 无缝衔接的核心动画：从 0 滚到总长度的一半 (-50%) */
+    @keyframes marquee-seamless {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
 
-        @media (max-width: 820px) {
-            .marquee-container { padding: 9px 0 !important; }
-            .marquee { font-size: 15.5px !important; }
-        }
-    </style>
+    /* 桌面端核心修复 */
+    .desktop-view .marquee-container {
+        padding: 12px 0 !important;
+        z-index: 9999 !important;
+        position: relative !important;
+    }
+    .desktop-view .marquee {
+        font-size: 19px !important;
+    }
+
+    @media (max-width: 820px) {
+        .marquee-container { padding: 9px 0 !important; }
+        .marquee { font-size: 15.5px !important; }
+    }
+</style>
+
 </head>
 <body>
     <div class="background-stage" id="backgroundStage" aria-hidden="true">
@@ -156,12 +164,26 @@
             </div>
         </div>
 
-        <!-- 走马灯（位置固定在 header 下方，搜索上方） -->
         <div class="marquee-container">
-            <div class="marquee" id="marquee">
-                欢迎使用潘方音乐 · 🔥广告位招租🔥 ·  联系邮箱：yfh198010@outlook.com  ·  yfh198010@163.com
-            </div>
+    <div class="marquee" id="marquee">
+        <!-- 第一组内容 -->
+        <div class="marquee-content">
+            <span>欢迎使用潘方音乐 · </span>
+            <span>🔥广告位招租🔥 · </span>
+            <span>联系邮箱：yfh198010@outlook.com · </span>
+            <span>yfh198010@163.com &nbsp;&nbsp;</span>
         </div>
+        <!-- 完全相同的第二组内容，用于实现无缝衔接 -->
+        <div class="marquee-content" aria-hidden="true">
+            <span>欢迎使用潘方音乐 · </span>
+            <span>🔥广告位招租🔥 · </span>
+            <span>联系邮箱：yfh198010@outlook.com · </span>
+            <span>yfh198010@163.com &nbsp;&nbsp;</span>
+        </div>
+    </div>
+</div>
+
+
 
         <div class="search-area" id="searchArea">
             <button type="button" class="mobile-close-btn" id="mobileSearchClose" aria-label="关闭搜索">

@@ -372,17 +372,38 @@
             document.body.appendChild(mobileScript);
         }
 
-        /* 强制修正标题（解决手机端显示 Solara 的问题） */
-        window.addEventListener('load', function () {
-            const titleEl = document.getElementById('mobileToolbarTitle');
-            if (titleEl) {
-                titleEl.textContent = '潘方音乐';
-            }
-            /* 如果 mobile.js 稍后修改标题，也强制还原 */
-            setTimeout(() => {
-                if (titleEl) titleEl.textContent = '潘方音乐';
-            }, 800);
-        });
+        /* 彻底修正标题：实时监控并强制锁定为“潘方音乐” */
+(function() {
+    const targetTitle = '潘方音乐';
+    const titleId = 'mobileToolbarTitle';
+
+    function enforceTitle() {
+        const titleEl = document.getElementById(titleId);
+        if (titleEl && titleEl.textContent !== targetTitle) {
+            titleEl.textContent = targetTitle;
+        }
+    }
+
+    // 1. 页面加载时立即执行一次
+    window.addEventListener('DOMContentLoaded', enforceTitle);
+    window.addEventListener('load', enforceTitle);
+
+    // 2. 核心：使用 MutationObserver 监控 DOM 变化
+    const observer = new MutationObserver(function(mutations) {
+        enforceTitle();
+    });
+
+    // 开始监控整个文档，确保即使标题元素被删掉重建也能捕捉到
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+        characterData: true
+    });
+
+    // 3. 保险措施：针对某些延迟极长的脚本
+    setTimeout(enforceTitle, 2000);
+})();
+
     </script>
 </body>
 </html>

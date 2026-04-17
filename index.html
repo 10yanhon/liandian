@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
     <script>
         (function () {
             const ua = navigator.userAgent || "";
@@ -98,60 +99,53 @@
         })();
     </script>
 
-    <!-- 走马灯样式（浅玫瑰红 + 多条内容 + 稳定无缝滚动） -->
+    <!-- 修复后的走马灯样式（浅玫瑰红 + 桌面端优先 + 位置稳定） -->
     <style>
         .marquee-container {
             width: 100%;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.68);
-            border-top: 1px solid rgba(255, 153, 204, 0.3);
-            border-bottom: 1px solid rgba(255, 153, 204, 0.3);
-            padding: 10px 0;
+            background: rgba(0, 0, 0, 0.72);
+            border-top: 1px solid rgba(255, 153, 204, 0.35);
+            border-bottom: 1px solid rgba(255, 153, 204, 0.35);
+            padding: 11px 0;
             position: relative;
-            z-index: 15;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+            z-index: 25;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
         }
 
-        .marquee-wrapper {
-            display: flex;
-            width: fit-content;
-            animation: marquee-scroll 38s linear infinite;
+        .marquee {
+            display: inline-block;
             white-space: nowrap;
-        }
-
-        .marquee-item {
-            display: inline-flex;
-            align-items: center;
-            padding: 0 45px;
-            font-size: 16px;
-            color: #ff99cc;            /* 浅玫瑰红 */
+            font-size: 16.5px;
+            color: #ff99cc;                 /* 浅玫瑰红 */
             font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 153, 204, 0.8);
-            letter-spacing: 0.6px;
+            padding-left: 100%;
+            animation: marquee 42s linear infinite;
+            text-shadow: 0 0 12px rgba(255, 153, 204, 0.85);
+            will-change: transform;
         }
 
-        .marquee-wrapper:hover {
+        .marquee:hover {
             animation-play-state: paused;
         }
 
-        @keyframes marquee-scroll {
-            from {
-                transform: translateX(0);
-            }
-            to {
-                transform: translateX(-50%);
-            }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-100%); }
         }
 
-        /* 移动端适配 */
+        /* 桌面端优化 */
+        .desktop-view .marquee-container {
+            padding: 12px 0;
+        }
+        .desktop-view .marquee {
+            font-size: 17px;
+        }
+
+        /* 移动端优化 */
         @media (max-width: 820px) {
-            .marquee-container {
-                padding: 8px 0;
-            }
-            .marquee-item {
-                font-size: 15px;
-                padding: 0 35px;
-            }
+            .marquee-container { padding: 9px 0; }
+            .marquee { font-size: 15.5px; }
         }
     </style>
 
@@ -184,17 +178,10 @@
             </div>
         </div>
 
-        <!-- 新增走马灯：浅玫瑰红、多条内容、无缝滚动 -->
+        <!-- 走马灯：固定在屏幕靠上方，桌面端和手机端位置一致 -->
         <div class="marquee-container">
-            <div class="marquee-wrapper" id="marqueeWrapper">
-                <!-- 第一组 -->
-                <div class="marquee-item">🔥 欢迎使用潘方音乐 </div>
-                <div class="marquee-item">🌸 音乐让生活更美好 · 每天听好歌，从这里开始</div>
-                <div class="marquee-item">❤️ 如有问题欢迎反馈 · 感谢每一位听众的支持</div>
-                <!-- 第二组（用于无缝循环，必须和第一组完全相同） -->
-                <div class="marquee-item">🔥 欢迎使用潘方音乐 </div>
-                <div class="marquee-item">🌸 音乐让生活更美好 · 每天听好歌，从这里开始</div>
-                <div class="marquee-item">❤️ 如有问题欢迎反馈 · 感谢每一位听众的支持</div>
+            <div class="marquee" id="marquee">
+                🔥 欢迎使用潘方音乐 · 音乐让生活更美好！❤️ 如有问题欢迎反馈 · 每天听好歌，从这里开始 · 感谢每一位听众的支持
             </div>
         </div>
 

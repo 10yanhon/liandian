@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
     <script>
         (function () {
             const ua = navigator.userAgent || "";
@@ -98,6 +99,57 @@
         })();
     </script>
 
+    <!-- 新增：走马灯样式 -->
+    <style>
+        /* ==================== 走马灯样式 ==================== */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.65);
+            border-top: 1px solid rgba(161, 245, 201, 0.25);
+            border-bottom: 1px solid rgba(161, 245, 201, 0.25);
+            padding: 9px 0;
+            position: relative;
+            z-index: 15;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .marquee {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 14.5px;
+            color: #a1f5c9;           /* 浅绿色 */
+            font-weight: 400;
+            padding-left: 100%;
+            animation: marquee 28s linear infinite;
+            text-shadow: 0 0 8px rgba(161, 245, 201, 0.7);
+            letter-spacing: 0.5px;
+        }
+
+        .marquee:hover {
+            animation-play-state: paused;   /* 鼠标悬停暂停滚动 */
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 820px) {
+            .marquee-container {
+                padding: 7px 0;
+            }
+            .marquee {
+                font-size: 13.5px;
+            }
+        }
+    </style>
+
 </head>
 <body>
     <div class="background-stage" id="backgroundStage" aria-hidden="true">
@@ -124,6 +176,13 @@
                     <i class="fas fa-sun theme-icon theme-icon--sun" aria-hidden="true"></i>
                     <i class="fas fa-moon theme-icon theme-icon--moon" aria-hidden="true"></i>
                 </button>
+            </div>
+        </div>
+
+        <!-- 新增：走马灯（跑马灯） - 放在 header 下方，搜索区域上方 -->
+        <div class="marquee-container">
+            <div class="marquee" id="marquee">
+                🔥 欢迎使用潘方音乐 · 支持正版音乐 · 免费学习交流使用 · 音乐让生活更美好！❤️ 如有问题欢迎反馈 · 每天听好歌，从这里开始 ~
             </div>
         </div>
 
@@ -175,6 +234,7 @@
             </div>
         </div>
 
+        <!-- 以下内容保持不变（main-content、controls等） -->
         <div class="main-content">
             <div class="cover-area">
                 <div class="mobile-turntable" id="mobileTurntable">
@@ -217,6 +277,7 @@
             </div>
 
             <div class="mobile-panel" id="mobilePanel">
+                <!-- 面板内容保持不变... -->
                 <div class="mobile-panel-header" id="mobilePanelHeader">
                     <div class="mobile-panel-handle" aria-hidden="true"></div>
                     <div class="playlist-tabs" role="tablist">
@@ -323,6 +384,7 @@
                 </div>
 
                 <div class="playlist active empty" id="playlist" role="tabpanel" aria-labelledby="playlistTab">
+                    <!-- 播放列表内容保持原样 -->
                     <div class="playlist-header">
                         <div class="playlist-tabs" role="tablist">
                             <button
@@ -385,6 +447,7 @@
                     </div>
                 </div>
                 <div class="playlist favorites empty" id="favorites" role="tabpanel" aria-labelledby="favoritesTab" hidden>
+                    <!-- 收藏列表内容保持原样 -->
                     <div class="playlist-header">
                         <div class="playlist-tabs" role="tablist">
                             <button
@@ -503,22 +566,22 @@
 
     <audio id="audioPlayer" preload="metadata" playsinline></audio>
 
-<!-- 通知容器 -->
-<div id="notification" class="notification"></div>
+    <!-- 通知容器 -->
+    <div id="notification" class="notification"></div>
 
-<!-- 调试信息容器 -->
-<div id="debugInfo" class="debug-info"></div>
+    <!-- 调试信息容器 -->
+    <div id="debugInfo" class="debug-info"></div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="js/index.js"></script>
-<script>
-    if (window.__SOLARA_IS_MOBILE) {
-        const mobileScript = document.createElement('script');
-        mobileScript.src = 'js/mobile.js';
-        mobileScript.async = false;
-        mobileScript.defer = false;
-        document.body.appendChild(mobileScript);
-    }
-</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+        if (window.__SOLARA_IS_MOBILE) {
+            const mobileScript = document.createElement('script');
+            mobileScript.src = 'js/mobile.js';
+            mobileScript.async = false;
+            mobileScript.defer = false;
+            document.body.appendChild(mobileScript);
+        }
+    </script>
 </body>
 </html>

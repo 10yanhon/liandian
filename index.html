@@ -74,7 +74,7 @@
         })();
     </script>
 
-    <!-- 走马灯最终样式（无底色 + 强制覆盖 desktop.css + 防止按钮失效） -->
+    <!-- 走马灯最终修复样式（无底色 + 强覆盖 desktop.css + 位置锁定） -->
     <style>
         .marquee-container {
             width: 100% !important;
@@ -82,11 +82,12 @@
             padding: 10px 0 !important;
             margin: 0 auto !important;
             position: relative !important;
-            z-index: 30 !important;
+            z-index: 9999 !important;
             background: transparent !important;
             border: none !important;
             box-shadow: none !important;
-            pointer-events: none !important;   /* 防止任何按钮失效 */
+            pointer-events: none !important;
+            order: -1 !important;               /* 强制排在搜索栏上方 */
         }
 
         .marquee {
@@ -111,10 +112,11 @@
             to   { transform: translateX(-100%); }
         }
 
-        /* 桌面端强制修正（解决跑到左下角的核心） */
+        /* 桌面端核心修复：覆盖 desktop.css 的布局挤压 */
         .desktop-view .marquee-container {
             padding: 12px 0 !important;
-            z-index: 35 !important;
+            z-index: 9999 !important;
+            position: relative !important;
         }
         .desktop-view .marquee {
             font-size: 17px !important;
@@ -154,10 +156,10 @@
             </div>
         </div>
 
-        <!-- 走马灯（位置固定在 header 正下方，搜索正上方） -->
+        <!-- 走马灯（已修复桌面端位置） -->
         <div class="marquee-container">
             <div class="marquee" id="marquee">
-                 欢迎使用潘方音乐.  🔥广告位招租🔥，欢迎咨询邮箱：yfh198010@163.com  .  yfh198010@outlook.com
+                 欢迎使用潘方音乐 · 🔥广告位招租，联系邮箱：yfh198010@163.com,    yfh198010@outlook.com
             </div>
         </div>
 
@@ -198,7 +200,6 @@
             </div>
         </div>
 
-        <!-- 以下为你原文件完整内容（未做任何删减） -->
         <div class="main-content">
             <div class="cover-area">
                 <div class="mobile-turntable" id="mobileTurntable">
@@ -258,7 +259,6 @@
                 </div>
 
                 <div class="playlist active empty" id="playlist" role="tabpanel" aria-labelledby="playlistTab">
-                    <!-- 播放列表内容（保持原样） -->
                     <div class="playlist-header">
                         <div class="playlist-tabs" role="tablist">
                             <button id="playlistTab" class="playlist-tab active" type="button" role="tab" aria-selected="true" data-target="playlist">播放列表</button>
@@ -276,7 +276,6 @@
                     </div>
                 </div>
                 <div class="playlist favorites empty" id="favorites" role="tabpanel" aria-labelledby="favoritesTab" hidden>
-                    <!-- 收藏列表内容（保持原样） -->
                     <div class="playlist-header">
                         <div class="playlist-tabs" role="tablist">
                             <button id="playlistTabSecondary" class="playlist-tab active" type="button" role="tab" aria-selected="true" data-target="playlist">播放列表</button>
@@ -350,6 +349,18 @@
             mobileScript.defer = false;
             document.body.appendChild(mobileScript);
         }
+
+        /* 强制修正标题（解决手机端显示 Solara 的问题） */
+        window.addEventListener('load', function () {
+            const titleEl = document.getElementById('mobileToolbarTitle');
+            if (titleEl) {
+                titleEl.textContent = '潘方音乐';
+            }
+            /* 如果 mobile.js 稍后修改标题，也强制还原 */
+            setTimeout(() => {
+                if (titleEl) titleEl.textContent = '潘方音乐';
+            }, 800);
+        });
     </script>
 </body>
 </html>

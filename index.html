@@ -117,19 +117,21 @@
         to   { transform: translateX(-50%); }
     }
 
-    /* 5. 【重点修复】桌面端位置锁定补丁 */
+        /* 5. 【重点修复】桌面端位置锁定补丁 - 已微调防止遮挡 */
     .desktop-view .marquee-container {
         position: absolute !important; /* 强制脱离 desktop.css 的布局挤压 */
-        top: 20px !important;          /* 距离页面顶部 20px，保持在搜索栏上方 */
+        top: -10px !important;         /* 改为负值，将走马灯往上提，防止遮挡标题 */
         left: 50% !important;
         transform: translateX(-50%) !important; /* 强制水平居中 */
         width: 100% !important;
-        max-width: 1200px !important;  /* 限制宽度，防止文字拉得太散 */
+        max-width: 100% !important;    /* 允许横跨全屏 */
+        padding: 5px 0 !important;      /* 缩减高度，减少占用空间 */
     }
 
     .desktop-view .marquee {
         font-size: 19px !important;
     }
+
 
     /* 6. 鼠标悬停暂停 */
     .marquee:hover {

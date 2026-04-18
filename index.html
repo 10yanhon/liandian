@@ -120,7 +120,7 @@
         /* 5. 【重点修复】桌面端位置锁定补丁 - 已微调防止遮挡 */
     .desktop-view .marquee-container {
         position: absolute !important; /* 强制脱离 desktop.css 的布局挤压 */
-        top: 5px !important;         /* 改为负值，将走马灯往上提，防止遮挡标题 */
+        top: 3px !important;         /* 改为正值，将走马灯往下移，防止顶格页面 */
         left: 50% !important;
         transform: translateX(-50%) !important; /* 强制水平居中 */
         width: 100% !important;
